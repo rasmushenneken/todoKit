@@ -16,7 +16,10 @@
 
   const getAllTodos = async () => {
     try {
-      let { data, error } = await supabase.from("todos").select("*")
+      let { data, error } = await supabase
+        .from("todos")
+        .select("*")
+        .order("isComplete", { ascending: true })
       todos = data
     } catch (error) {
       console.log(error)
@@ -29,6 +32,7 @@
         .from("todos")
         .update({ task: todo.task, isComplete: todo.isComplete })
         .eq("id", todo.id)
+      getAllTodos()
     } catch (error) {
       console.log(error)
     }
@@ -80,27 +84,16 @@
   </div>
 
   <div class="todos">
-    {#each todos.filter(todo => !todo.isComplete) as todo (todo.id)}
+    {#each todos as todo (todo.id)}
       <div
         animate:flip={{ duration: 250 }}
-        in:fly={{ x: 10, duration: 500 }}
+        in:fly={{ x: 10, duration: 250 }}
         out:fly={{ x: 10, duration: 250 }}
       >
         <Todo {todo} {updateTodo} {deleteTodo} />
       </div>
     {:else}
       <p>Nothing to do...</p>
-    {/each}
-    {#each todos.filter(todo => todo.isComplete) as todo (todo.id)}
-      <div
-        animate:flip={{ duration: 250 }}
-        in:fly={{ x: 10, duration: 500 }}
-        out:fly={{ x: 10, duration: 250 }}
-      >
-        <Todo {todo} {updateTodo} {deleteTodo} />
-      </div>
-    {:else}
-      <p>Nothing completed :(</p>
     {/each}
   </div>
 </section>
@@ -123,6 +116,12 @@
   }
 
   p {
+    font-size: 0.8rem;
+    color: #fff;
+  }
+
+  h2 {
+    margin-bottom: 0;
     color: #fff;
   }
 
