@@ -1,0 +1,33 @@
+html {
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background-color: rgb(46, 50, 73);
+}
+
+.container {
+  max-width: min(95vw, 40rem);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-align: center;
+}
+
+@media screen and (min-width: 40rem) {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    text-align: left;
+  }
+}
